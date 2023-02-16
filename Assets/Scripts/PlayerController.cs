@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     public float speed = 1;
 
 
+    PlayerControls controls;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -20,19 +22,19 @@ public class PlayerController : MonoBehaviour
     void OnMove(InputValue movementValue)
     {
         Vector2 movementVector = movementValue.Get<Vector2>();
-     
-            movementX = movementVector.x;
-            movementY = movementVector.y;            
-     }
+
+        movementX = movementVector.x;
+        movementY = movementVector.y;
+    }
 
     void FixedUpdate()
     {
         Vector3 movement = new Vector3(movementX, 0.0f, movementY);
-        rb.AddForce(movement * speed);      
+        rb.AddForce(movement * speed);
     }
 
     void Update()
     {
-        
+
     }
 }
