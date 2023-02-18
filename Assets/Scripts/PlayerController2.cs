@@ -17,9 +17,6 @@ public class PlayerController2 : MonoBehaviour
         controls.Player.Move.performed += ctx => move = ctx.ReadValue<Vector2>();
         controls.Player.Move.canceled += ctx => move = Vector2.zero;
 
-
-
-
         //Debugging
         //controls.Player.Jump.performed += ctx => SendMessage();
         //controls.Player.Move.performed += ctx => SendMessage(ctx.ReadValue<Vector2>());
