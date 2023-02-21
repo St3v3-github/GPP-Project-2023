@@ -16,7 +16,7 @@ public class CameraManger : MonoBehaviour
 
     public void Awake()
     {
-        //targetTransform = FindObjectofType<ControllerCapsule>().transform;
+        targetTransform = FindObjectOfType<PlayerManager>().transform;
     }
 
     public void FollowTarget()
@@ -29,6 +29,7 @@ public class CameraManger : MonoBehaviour
 
     public void RotateCamera()
     {
-        
+        //lookAngle = lookAngle + joystick right x * cameralookspeed
+        //pivotAngle = PivotAngle - joystic right y * camera pivot speed
     }
 }
