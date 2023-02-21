@@ -17,8 +17,8 @@ public class PhysController : MonoBehaviour
 
     void CheckForColliders()
     {
-        ray = new Ray(capsule.transform.position, capsule.transform.up * -1.0f);
-        Debug.DrawRay(capsule.transform.position, Vector3.down * rideHeight, Color.red);
+        ray = new Ray(capsule.transform.position, (capsule.transform.up * -1.0f));
+        Debug.DrawRay(capsule.transform.position, (capsule.transform.up * -1.0f) * rideHeight, Color.red);
 
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
