@@ -724,7 +724,7 @@ GameObject:
   - component: {fileID: 1715776823}
   m_Layer: 0
   m_Name: ControllerCapsule
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -801,7 +801,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1715776813}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 7.6, z: 0}
+  m_LocalPosition: {x: 0, y: 7.6, z: 12.98}
   m_LocalScale: {x: 1.5, y: 1.25, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1077,7 +1077,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1792084568}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.2, z: 0}
   m_LocalScale: {x: 50, y: 0.25, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
@@ -10,13 +9,6 @@ public class InputManager : MonoBehaviour
     public Vector2 movementInput;
     public float verticalInput;
     public float horizontalInput;
-
-    private void OnAwake()
-    {
-        playerControls = new PlayerControls();
-        playerControls.Player.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
-        playerControls.Player.Move.canceled += ctx => movementInput = Vector2.zero;
-    }
 
     private void HandleMovementInput()
     {
@@ -29,19 +21,23 @@ public class InputManager : MonoBehaviour
         HandleMovementInput();
         //HandleJumpInput
         //HandleActionInput
-
     }
-
-
 
     private void OnEnable()
     {
-        playerControls.Player.Enable();
+        if (playerControls == null)
+        {
+            playerControls = new PlayerControls();
+
+            playerControls.PlayerMovement.Movement.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
+        }
+
+        playerControls.Enable();
     }
 
     private void OnDisable()
     {
-        playerControls.Player.Disable();
+        playerControls.Disable();
     }
 
     private void SendMessage(Vector2 coordinates)
