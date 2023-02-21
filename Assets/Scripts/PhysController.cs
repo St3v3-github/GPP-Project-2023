@@ -22,8 +22,8 @@ public class PhysController : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            _rayDidHit = true;
-            Debug.Log(hit.collider.gameObject.name + " was hit");
+            //_rayDidHit = true;
+            //Debug.Log(hit.collider.gameObject.name + " was hit");
         }
     }
 
