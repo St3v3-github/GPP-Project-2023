@@ -6,13 +6,13 @@ using UnityEngine;
 public class PlayerManager: MonoBehaviour
 {
     InputManager inputManager;
-    CameraManger cameraManager;
+    CameraManager cameraManager;
     PlayerMotion playerMotion;
 
     private void Awake()
     {
        inputManager= GetComponent<InputManager>();
-       cameraManager= FindObjectOfType<CameraManger>();
+       cameraManager= FindObjectOfType<CameraManager>();
        playerMotion= GetComponent<PlayerMotion>();
     }
 
@@ -29,6 +29,6 @@ public class PlayerManager: MonoBehaviour
 
     private void LateUpdate()
     {
-        cameraManager.FollowTarget();
+        cameraManager.HandleAllCameraMovement();
     }
 }
