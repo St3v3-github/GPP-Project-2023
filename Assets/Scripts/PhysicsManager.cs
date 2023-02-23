@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PhysController : MonoBehaviour
+public class PhysicsManager: MonoBehaviour
 {
     private Rigidbody rb;
 

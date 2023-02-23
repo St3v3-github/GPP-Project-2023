@@ -5,6 +5,8 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     PlayerControls playerControls;
+    Animator animator;
+    //AnimatorManager animatorManager;
 
     public Vector2 movementInput;
     public Vector2 cameraInput;
@@ -15,10 +17,26 @@ public class InputManager : MonoBehaviour
     public float verticalInput;
     public float horizontalInput;
 
+    //private float moveAmount;
+
+    private void Awake()
+    {
+        //animatorManager = GetComponent<AnimatorManager>();  
+        animator = GetComponent<Animator>();
+    }
+
     private void HandleMovementInput()
     {
         verticalInput = movementInput.y;
         horizontalInput = movementInput.x;
+
+        if (verticalInput != 0)
+        {
+            animator.SetBool("isRunning", true);
+        }
+
+        //moveAmount = Mathf.Clamp01(Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput));
+        //animatorManager.UpdateAnimatorValues(0, moveAmount);
     }
 
     private void HandleCameraInput()
