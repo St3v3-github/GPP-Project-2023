@@ -5,7 +5,7 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     PlayerControls playerControls;
-    Animator animator;
+    //Animator animator;
     //AnimatorManager animatorManager;
 
     public Vector2 movementInput;
@@ -22,18 +22,13 @@ public class InputManager : MonoBehaviour
     private void Awake()
     {
         //animatorManager = GetComponent<AnimatorManager>();  
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
     }
 
     private void HandleMovementInput()
     {
         verticalInput = movementInput.y;
         horizontalInput = movementInput.x;
-
-        if (verticalInput != 0)
-        {
-            animator.SetBool("isRunning", true);
-        }
 
         //moveAmount = Mathf.Clamp01(Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput));
         //animatorManager.UpdateAnimatorValues(0, moveAmount);

@@ -20,8 +20,8 @@ public class CameraManager : MonoBehaviour
     public float minimumCollisionOffset = 0.2f;
     public float cameraCollisionRadius = 0.2f;
     public float cameraFollowSpeed = 0.2f;
-    public float cameraLookSpeed = 2f;
-    public float cameraPivotSpeed = 2f;
+    public float cameraLookSpeed = 5f;
+    public float cameraPivotSpeed = 5f;
 
 
     public float lookAngle;     //up and down

@@ -9,6 +9,7 @@ public class PlayerMotion: MonoBehaviour
     Vector3 moveDirection;
     Transform cameraObject;
     Rigidbody playerRB;
+    Animator animator;
 
     public float movementSpeed = 10.0f;
     public float rotationSpeed = 10.0f;
@@ -17,6 +18,7 @@ public class PlayerMotion: MonoBehaviour
     {
         inputManager = GetComponent<InputManager>();
         playerRB = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
         cameraObject = Camera.main.transform;
     }
 
@@ -36,6 +38,16 @@ public class PlayerMotion: MonoBehaviour
 
         Vector3 movementVelocity = moveDirection;
         playerRB.velocity = movementVelocity;
+
+        if (playerRB.velocity.x != 0 || playerRB.velocity.y != 0)
+        {
+            animator.SetBool("isRunning", true);
+        }
+
+        else
+        {
+            animator.SetBool("isRunning", false);
+        }
     }
 
     private void HandleRotation()
