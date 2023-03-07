@@ -489,7 +489,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -3}
+  m_LocalPosition: {x: 0, y: -0.29999995, z: -3.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1151,6 +1151,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementInput: {x: 0, y: 0}
   cameraInput: {x: 0, y: 0}
+  jumpInput: 0
+  sprintInput: 0
   cameraInputX: 0
   cameraInputY: 0
   verticalInput: 0
@@ -1167,7 +1169,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2ba1e3e242960440b05ba610b7248c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 10
+  movementSpeed: 7
+  sprintSpeed: 10
   rotationSpeed: 10
 --- !u!114 &1761970556
 MonoBehaviour:

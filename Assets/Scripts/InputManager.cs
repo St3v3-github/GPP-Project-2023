@@ -5,11 +5,15 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     PlayerControls playerControls;
+    Animator animator;
+
     //Animator animator;
     //AnimatorManager animatorManager;
 
     public Vector2 movementInput;
     public Vector2 cameraInput;
+    public bool jumpInput = false;
+    public bool sprintInput = false;
 
     public float cameraInputX;
     public float cameraInputY;
@@ -17,12 +21,14 @@ public class InputManager : MonoBehaviour
     public float verticalInput;
     public float horizontalInput;
 
-    //private float moveAmount;
 
     private void Awake()
     {
+        //old blend tree animation code
         //animatorManager = GetComponent<AnimatorManager>();  
         //animator = GetComponent<Animator>();
+
+        animator = GetComponent<Animator>();
     }
 
     private void HandleMovementInput()
@@ -30,8 +36,47 @@ public class InputManager : MonoBehaviour
         verticalInput = movementInput.y;
         horizontalInput = movementInput.x;
 
+        if (horizontalInput != 0 || verticalInput != 0)
+        {
+            animator.SetBool("isRunning", true);
+        }
+
+        else
+        {
+            animator.SetBool("isRunning", false);
+        }
+
         //moveAmount = Mathf.Clamp01(Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput));
         //animatorManager.UpdateAnimatorValues(0, moveAmount);
+    }
+
+    private void HandleJumpInput()
+    {
+        if (jumpInput)
+        {
+            
+            //Debug.Log("Jump = " + jumpInput);
+        }
+
+        else
+        {
+          
+        }
+        
+    }
+
+    private void HandleSprintInput()
+    {
+        if (sprintInput)
+        {
+            animator.SetBool("isSprinting", true);
+            //Debug.Log("Sprint = " + sprintInput);
+        }
+
+        else
+        {
+            animator.SetBool("isSprinting", false);
+        }
     }
 
     private void HandleCameraInput()
@@ -44,8 +89,8 @@ public class InputManager : MonoBehaviour
     {
         HandleMovementInput();
         HandleCameraInput();
-        //HandleJumpInput
-        //HandleActionInput
+        HandleJumpInput();
+        HandleSprintInput();
     }
 
     private void OnEnable()
@@ -56,6 +101,12 @@ public class InputManager : MonoBehaviour
 
             playerControls.PlayerMovement.Movement.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
             playerControls.PlayerMovement.Camera.performed += ctx => cameraInput = ctx.ReadValue<Vector2>();
+
+            playerControls.PlayerMovement.Jump.performed+= ctx => jumpInput = true;
+            playerControls.PlayerMovement.Jump.canceled += ctx => jumpInput = false;
+
+            playerControls.PlayerMovement.Sprint.started += ctx => sprintInput = true;
+            playerControls.PlayerMovement.Sprint.canceled += ctx => sprintInput = false;
         }
 
         playerControls.Enable();

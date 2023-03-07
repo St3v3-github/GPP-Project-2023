@@ -9,16 +9,15 @@ public class PlayerMotion: MonoBehaviour
     Vector3 moveDirection;
     Transform cameraObject;
     Rigidbody playerRB;
-    Animator animator;
 
-    public float movementSpeed = 10.0f;
+    public float movementSpeed = 7.5f;
+    public float sprintSpeed = 20.0f;
     public float rotationSpeed = 10.0f;
 
     private void Awake()
     {
         inputManager = GetComponent<InputManager>();
         playerRB = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
         cameraObject = Camera.main.transform;
     }
 
@@ -34,20 +33,13 @@ public class PlayerMotion: MonoBehaviour
         moveDirection = moveDirection + cameraObject.right * inputManager.horizontalInput;
         moveDirection.Normalize();
         moveDirection.y = 0;
+
+        //if sprinting -> select sprint speed
+        //else -> normal speed
         moveDirection = moveDirection * movementSpeed;
 
         Vector3 movementVelocity = moveDirection;
         playerRB.velocity = movementVelocity;
-
-        if (playerRB.velocity.x != 0 || playerRB.velocity.y != 0)
-        {
-            animator.SetBool("isRunning", true);
-        }
-
-        else
-        {
-            animator.SetBool("isRunning", false);
-        }
     }
 
     private void HandleRotation()
