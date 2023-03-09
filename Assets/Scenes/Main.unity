@@ -1149,9 +1149,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15e289a7c82430046b7dd8cb098fc52e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerRB: {fileID: 1761970553}
   movementInput: {x: 0, y: 0}
   cameraInput: {x: 0, y: 0}
   jumpInput: 0
+  onGround: 1
+  jumpHeight: 35
   sprintInput: 0
   cameraInputX: 0
   cameraInputY: 0
@@ -1169,7 +1172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2ba1e3e242960440b05ba610b7248c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 7
+  runSpeed: 7.5
   sprintSpeed: 10
   rotationSpeed: 10
 --- !u!114 &1761970556
@@ -1212,7 +1215,7 @@ GameObject:
   - component: {fileID: 1792084569}
   m_Layer: 0
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

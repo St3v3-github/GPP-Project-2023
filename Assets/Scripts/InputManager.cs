@@ -5,6 +5,7 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     PlayerControls playerControls;
+    public Rigidbody playerRB;
     Animator animator;
 
     //Animator animator;
@@ -12,7 +13,11 @@ public class InputManager : MonoBehaviour
 
     public Vector2 movementInput;
     public Vector2 cameraInput;
+
     public bool jumpInput = false;
+    public bool onGround = true;
+    public float jumpHeight = 10f;
+
     public bool sprintInput = false;
 
     public float cameraInputX;
@@ -28,6 +33,7 @@ public class InputManager : MonoBehaviour
         //animatorManager = GetComponent<AnimatorManager>();  
         //animator = GetComponent<Animator>();
 
+        playerRB = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
     }
 
@@ -52,17 +58,23 @@ public class InputManager : MonoBehaviour
 
     private void HandleJumpInput()
     {
-        if (jumpInput)
+        if (jumpInput && onGround)
         {
-            
-            //Debug.Log("Jump = " + jumpInput);
-        }
+            animator.SetBool("isJumping", true);
+            playerRB.AddForce(new Vector3(0, jumpHeight, 0), ForceMode.Impulse);
+            onGround= false;
 
-        else
+            //Debug.Log("Jump = " + jumpInput);
+        }        
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground")
         {
-          
+            animator.SetBool("isJumping", false);
+            onGround = true;
         }
-        
     }
 
     private void HandleSprintInput()

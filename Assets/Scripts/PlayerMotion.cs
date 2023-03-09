@@ -10,7 +10,7 @@ public class PlayerMotion: MonoBehaviour
     Transform cameraObject;
     Rigidbody playerRB;
 
-    public float movementSpeed = 7.5f;
+    public float runSpeed = 7.5f;
     public float sprintSpeed = 20.0f;
     public float rotationSpeed = 10.0f;
 
@@ -36,7 +36,16 @@ public class PlayerMotion: MonoBehaviour
 
         //if sprinting -> select sprint speed
         //else -> normal speed
-        moveDirection = moveDirection * movementSpeed;
+        if (inputManager.sprintInput)
+        {
+            moveDirection = moveDirection * sprintSpeed;
+        }
+
+        else
+        {
+            moveDirection = moveDirection * runSpeed;
+        }
+
 
         Vector3 movementVelocity = moveDirection;
         playerRB.velocity = movementVelocity;
