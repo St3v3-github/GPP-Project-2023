@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PhysicsManager: MonoBehaviour
+/*public class PhysicsManager: MonoBehaviour
 {
     private Rigidbody rb;
 
@@ -32,3 +32,4 @@ public class PhysicsManager: MonoBehaviour
         CheckForColliders();
     }
 }
+*/

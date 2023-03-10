@@ -18,6 +18,9 @@ public class InputManager : MonoBehaviour
     public bool onGround = true;
     public float jumpHeight = 10f;
 
+    public float airTime = 0.1f;
+    public float fallVelocity = 1f;
+
     public bool sprintInput = false;
 
     public float cameraInputX;
@@ -58,17 +61,17 @@ public class InputManager : MonoBehaviour
 
     private void HandleJumpInput()
     {
+        playerRB.AddForce(-Vector3.up * fallVelocity); //* airTime);
+
         if (jumpInput && onGround)
         {
+            onGround = false;
             animator.SetBool("isJumping", true);
-            playerRB.AddForce(new Vector3(0, jumpHeight, 0), ForceMode.Impulse);
-            onGround= false;
-
-            //Debug.Log("Jump = " + jumpInput);
+            playerRB.AddForce(new Vector3(0, jumpHeight, 0), ForceMode.Acceleration);
         }        
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void onCollisionStay(Collision collision)
     {
         if (collision.gameObject.tag == "Ground")
         {
