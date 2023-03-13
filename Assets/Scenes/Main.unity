@@ -1443,6 +1443,7 @@ MonoBehaviour:
   playerRB: {fileID: 1761970553}
   movementInput: {x: 0, y: 0}
   cameraInput: {x: 0, y: 0}
+  jumpInput: 0
   sprintInput: 0
   cameraInputX: 0
   cameraInputY: 0
@@ -1501,8 +1502,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 231924abaa1b8ef40a149e6380bb369d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityMod: 150
   isGrounded: 1
+  gravityMod: 150
+  jumpPower: 1000
 --- !u!1 &1792084568
 GameObject:
   m_ObjectHideFlags: 0

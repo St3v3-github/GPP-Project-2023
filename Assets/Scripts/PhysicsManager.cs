@@ -5,27 +5,42 @@ using UnityEngine;
 
 public class PhysicsManager : MonoBehaviour
 {
+    InputManager inputManager;
     Rigidbody playerRB;
 
-    
+
+    private float velocity;
+    public bool isGrounded;
+
     private float gravity = -9.81f;
     public float gravityMod = 150.0f;
-    private float velocity;
     private Vector3 gravityVector;
 
+    public float jumpPower;
+    private Vector3 jumpVector;
 
-    public bool isGrounded;
 
     private void Awake()
     {
+        inputManager = GetComponent<InputManager>();
         playerRB = GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
         ApplyGravity();
+        Jump();
     }
 
+
+    private void Jump()
+    {
+        if (isGrounded && inputManager.jumpInput)
+        {
+            playerRB.AddForce(transform.up * jumpPower, ForceMode.Impulse);
+        }
+
+    }
 
     private void ApplyGravity()
     {
@@ -41,9 +56,7 @@ public class PhysicsManager : MonoBehaviour
 
         gravityVector.y = velocity;
         playerRB.AddForce(transform.up * gravityVector.y, ForceMode.Acceleration);
-
     }
-
 
     private void OnCollisionStay(Collision collision)
     {

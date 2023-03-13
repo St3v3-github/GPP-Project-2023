@@ -14,8 +14,9 @@ public class InputManager : MonoBehaviour
     public Vector2 movementInput;
     public Vector2 cameraInput;
 
-/*    public bool jumpInput = false;
-    public bool onGround = true;
+    public bool jumpInput = false;
+    
+/*    public bool onGround = true;
     public float jumpHeight = 10f;*/
 
 /*    public float airTime = 0.1f;
@@ -120,8 +121,8 @@ public class InputManager : MonoBehaviour
             playerControls.PlayerMovement.Movement.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
             playerControls.PlayerMovement.Camera.performed += ctx => cameraInput = ctx.ReadValue<Vector2>();
 
-            //playerControls.PlayerMovement.Jump.performed+= ctx => jumpInput = true;
-            //playerControls.PlayerMovement.Jump.canceled += ctx => jumpInput = false;
+            playerControls.PlayerMovement.Jump.performed+= ctx => jumpInput = true;
+            playerControls.PlayerMovement.Jump.canceled += ctx => jumpInput = false;
 
             playerControls.PlayerMovement.Sprint.started += ctx => sprintInput = true;
             playerControls.PlayerMovement.Sprint.canceled += ctx => sprintInput = false;
