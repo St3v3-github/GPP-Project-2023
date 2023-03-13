@@ -1503,8 +1503,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGrounded: 1
-  gravityMod: 150
-  jumpPower: 1000
+  gravityMod: 125
+  jumpPower: 25
 --- !u!1 &1792084568
 GameObject:
   m_ObjectHideFlags: 0
