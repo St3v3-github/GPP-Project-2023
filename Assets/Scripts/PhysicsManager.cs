@@ -7,6 +7,7 @@ public class PhysicsManager : MonoBehaviour
 {
     InputManager inputManager;
     Rigidbody playerRB;
+    Animator animator;
 
 
     private float velocity;
@@ -26,6 +27,7 @@ public class PhysicsManager : MonoBehaviour
     {
         inputManager = GetComponent<InputManager>();
         playerRB = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -39,7 +41,13 @@ public class PhysicsManager : MonoBehaviour
     {
         if (isGrounded && inputManager.jumpInput)
         {
+            animator.SetBool("isJumping", true);
             playerRB.AddForce(transform.up * jumpPower, ForceMode.Impulse);
+        }
+
+        else
+        {
+            animator.SetBool("isJumping", false);
         }
 
     }
