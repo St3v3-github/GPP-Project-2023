@@ -46,7 +46,6 @@ public class PlayerMotion: MonoBehaviour
             moveDirection = moveDirection * runSpeed;
         }
 
-
         Vector3 movementVelocity = moveDirection;
         playerRB.velocity = movementVelocity;
     }

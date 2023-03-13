@@ -14,12 +14,12 @@ public class InputManager : MonoBehaviour
     public Vector2 movementInput;
     public Vector2 cameraInput;
 
-    public bool jumpInput = false;
+/*    public bool jumpInput = false;
     public bool onGround = true;
-    public float jumpHeight = 10f;
+    public float jumpHeight = 10f;*/
 
-    public float airTime = 0.1f;
-    public float fallVelocity = 1f;
+/*    public float airTime = 0.1f;
+    public float fallVelocity = 1f;*/
 
     public bool sprintInput = false;
 
@@ -32,13 +32,18 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
-        //old blend tree animation code
-        //animatorManager = GetComponent<AnimatorManager>();  
-        //animator = GetComponent<Animator>();
-
         playerRB = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
     }
+
+    public void HandleAllInputs()
+    {
+        HandleMovementInput();
+        HandleCameraInput();
+        //HandleJumpInput();
+        HandleSprintInput();
+    }
+
 
     private void HandleMovementInput()
     {
@@ -54,31 +59,15 @@ public class InputManager : MonoBehaviour
         {
             animator.SetBool("isRunning", false);
         }
-
-        //moveAmount = Mathf.Clamp01(Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput));
-        //animatorManager.UpdateAnimatorValues(0, moveAmount);
     }
 
-    private void HandleJumpInput()
+
+    private void HandleCameraInput()
     {
-        playerRB.AddForce(-Vector3.up * fallVelocity); //* airTime);
-
-        if (jumpInput && onGround)
-        {
-            onGround = false;
-            animator.SetBool("isJumping", true);
-            playerRB.AddForce(new Vector3(0, jumpHeight, 0), ForceMode.Acceleration);
-        }        
+        cameraInputX = cameraInput.x;
+        cameraInputY = cameraInput.y;
     }
 
-    private void onCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            animator.SetBool("isJumping", false);
-            onGround = true;
-        }
-    }
 
     private void HandleSprintInput()
     {
@@ -94,19 +83,33 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    private void HandleCameraInput()
+
+    /*    private void HandleJumpInput()
+        {
+            playerRB.AddForce(-Vector3.up * fallVelocity); //* airTime);
+
+            if (jumpInput && onGround)
+            {
+                onGround = false;
+                animator.SetBool("isJumping", true);
+                playerRB.AddForce(new Vector3(0, jumpHeight, 0), ForceMode.Acceleration);
+            }        
+        }*/
+
+/*    private void HandleJumpInput()
     {
-        cameraInputX = cameraInput.x;
-        cameraInputY = cameraInput.y;
+        animator.SetBool("isJumping", true);
     }
 
-    public void HandleAllInputs()
+    private void onCollisionStay(Collision collision)
     {
-        HandleMovementInput();
-        HandleCameraInput();
-        HandleJumpInput();
-        HandleSprintInput();
-    }
+        if (collision.gameObject.tag == "Ground")
+        {
+            animator.SetBool("isJumping", false);
+            onGround = true;
+        }
+    }*/
+
 
     private void OnEnable()
     {
@@ -117,8 +120,8 @@ public class InputManager : MonoBehaviour
             playerControls.PlayerMovement.Movement.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
             playerControls.PlayerMovement.Camera.performed += ctx => cameraInput = ctx.ReadValue<Vector2>();
 
-            playerControls.PlayerMovement.Jump.performed+= ctx => jumpInput = true;
-            playerControls.PlayerMovement.Jump.canceled += ctx => jumpInput = false;
+            //playerControls.PlayerMovement.Jump.performed+= ctx => jumpInput = true;
+            //playerControls.PlayerMovement.Jump.canceled += ctx => jumpInput = false;
 
             playerControls.PlayerMovement.Sprint.started += ctx => sprintInput = true;
             playerControls.PlayerMovement.Sprint.canceled += ctx => sprintInput = false;
@@ -131,9 +134,4 @@ public class InputManager : MonoBehaviour
     {
         playerControls.Disable();
     }
-
-/*    private void SendMessage(Vector2 coordinates)
-    {
-        Debug.Log("Thumb-stick coordinates = " + coordinates);
-    }*/
 }
