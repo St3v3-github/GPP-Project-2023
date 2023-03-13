@@ -5,23 +5,13 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     PlayerControls playerControls;
-    public Rigidbody playerRB;
+    Rigidbody playerRB;
     Animator animator;
-
-    //Animator animator;
-    //AnimatorManager animatorManager;
 
     public Vector2 movementInput;
     public Vector2 cameraInput;
 
     public bool jumpInput = false;
-    
-/*    public bool onGround = true;
-    public float jumpHeight = 10f;*/
-
-/*    public float airTime = 0.1f;
-    public float fallVelocity = 1f;*/
-
     public bool sprintInput = false;
 
     public float cameraInputX;
@@ -83,34 +73,6 @@ public class InputManager : MonoBehaviour
             animator.SetBool("isSprinting", false);
         }
     }
-
-
-    /*    private void HandleJumpInput()
-        {
-            playerRB.AddForce(-Vector3.up * fallVelocity); //* airTime);
-
-            if (jumpInput && onGround)
-            {
-                onGround = false;
-                animator.SetBool("isJumping", true);
-                playerRB.AddForce(new Vector3(0, jumpHeight, 0), ForceMode.Acceleration);
-            }        
-        }*/
-
-/*    private void HandleJumpInput()
-    {
-        animator.SetBool("isJumping", true);
-    }
-
-    private void onCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            animator.SetBool("isJumping", false);
-            onGround = true;
-        }
-    }*/
-
 
     private void OnEnable()
     {

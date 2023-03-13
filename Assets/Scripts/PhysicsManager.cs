@@ -10,7 +10,7 @@ public class PhysicsManager : MonoBehaviour
 
 
     private float velocity;
-    public bool isGrounded;
+    public bool isGrounded = false;
 
     private float gravity = -9.81f;
     public float gravityMod = 150.0f;
@@ -18,6 +18,8 @@ public class PhysicsManager : MonoBehaviour
 
     public float jumpPower;
     private Vector3 jumpVector;
+
+
 
 
     private void Awake()
