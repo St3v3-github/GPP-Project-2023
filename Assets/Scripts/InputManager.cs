@@ -5,6 +5,7 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     PlayerControls playerControls;
+    PhysicsManager physicsManager;
     Rigidbody playerRB;
     Animator animator;
 
@@ -23,6 +24,7 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
+        physicsManager = FindObjectOfType<PhysicsManager>();
         playerRB = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
     }
@@ -31,7 +33,7 @@ public class InputManager : MonoBehaviour
     {
         HandleMovementInput();
         HandleCameraInput();
-        //HandleJumpInput();
+        HandleJumpInput();
         HandleSprintInput();
     }
 
@@ -71,6 +73,15 @@ public class InputManager : MonoBehaviour
         else
         {
             animator.SetBool("isSprinting", false);
+        }
+    }
+
+    private void HandleJumpInput()
+    {
+        if (jumpInput) 
+        {
+            jumpInput = false;
+            physicsManager.Jump();
         }
     }
 

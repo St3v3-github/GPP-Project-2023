@@ -1,14 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PhysicsManager : MonoBehaviour
 {
     InputManager inputManager;
     Rigidbody playerRB;
     Animator animator;
-
 
     private float velocity;
     public bool isGrounded = false;
@@ -20,7 +21,11 @@ public class PhysicsManager : MonoBehaviour
     public float jumpPower;
     private Vector3 jumpVector;
 
+    public bool canJump = true;
+    public bool canDoubleJump = false;
 
+/*    public int numberOfJumps = 0;
+    public int maxJumps = 2;*/
 
 
     private void Awake()
@@ -33,23 +38,26 @@ public class PhysicsManager : MonoBehaviour
     private void Update()
     {
         ApplyGravity();
-        Jump();
     }
 
 
-    private void Jump()
+    public void Jump()
     {
-        if (isGrounded && inputManager.jumpInput)
+        if (canJump)
         {
             animator.SetBool("isJumping", true);
             playerRB.AddForce(transform.up * jumpPower, ForceMode.Impulse);
+            canJump = false;
+            canDoubleJump = true;
+
         }
 
-        else
+        if (canDoubleJump)
         {
-            animator.SetBool("isJumping", false);
+            animator.SetBool("isJumping", true);
+            playerRB.AddForce(transform.up * jumpPower * 1.3f, ForceMode.Impulse);
+            canDoubleJump = false;
         }
-
     }
 
     private void ApplyGravity()
@@ -72,7 +80,9 @@ public class PhysicsManager : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground")
         {
+            animator.SetBool("isJumping", false);
             isGrounded = true;
+            canJump = true;
         }
 
     }
