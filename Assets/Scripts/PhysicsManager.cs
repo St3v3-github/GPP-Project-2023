@@ -19,7 +19,10 @@ public class PhysicsManager : MonoBehaviour
     private Vector3 gravityVector;
 
     public float jumpPower;
+    public float doubleJumpMod = 2f;
     private Vector3 jumpVector;
+
+
 
     public bool canJump = true;
     public bool canDoubleJump = false;
@@ -45,7 +48,7 @@ public class PhysicsManager : MonoBehaviour
     {
         if (canJump)
         {
-            animator.SetBool("isJumping", true);
+            //animator.SetBool("isJumping", true);
             playerRB.AddForce(transform.up * jumpPower, ForceMode.Impulse);
             canJump = false;
             canDoubleJump = true;
@@ -54,8 +57,9 @@ public class PhysicsManager : MonoBehaviour
 
         if (canDoubleJump)
         {
-            animator.SetBool("isJumping", true);
-            playerRB.AddForce(transform.up * jumpPower * 1.3f, ForceMode.Impulse);
+            //animator.SetBool("isJumping", true);
+            animator.Play("Base Layer.Idle Jump 0", 0, 0);
+            playerRB.AddForce(transform.up * jumpPower * doubleJumpMod , ForceMode.Impulse);
             canDoubleJump = false;
         }
     }
