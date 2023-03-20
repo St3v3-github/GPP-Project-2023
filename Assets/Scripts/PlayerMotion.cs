@@ -32,7 +32,7 @@ public class PlayerMotion: MonoBehaviour
         moveDirection = cameraObject.forward * inputManager.verticalInput;
         moveDirection = moveDirection + cameraObject.right * inputManager.horizontalInput;
         moveDirection.Normalize();
-        moveDirection.y = 0;
+        moveDirection.y = 0f;
 
         //if sprinting -> select sprint speed
         //else -> normal speed
@@ -47,7 +47,7 @@ public class PlayerMotion: MonoBehaviour
         }
 
         Vector3 movementVelocity = moveDirection;
-        playerRB.velocity = movementVelocity;
+        playerRB.velocity = movementVelocity + new Vector3(moveDirection.x, -1f * playerRB.mass, moveDirection.z);
     }
 
     private void HandleRotation()
