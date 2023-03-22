@@ -10,11 +10,13 @@ public class EnemyManager : MonoBehaviour
     Transform playerTransform;
     Rigidbody enemyRB;
 
+    public Vector3 targetPosition;
+
     public LayerMask Ground, Player;
 
     private Vector3 enemyVelocity = Vector3.zero;
-    public float enemySpeed = 7.5f;
-    public float rotationSpeed = 10.0f;     
+    public float enemySpeed = .5f;
+    public float rotationSpeed = 10.0f;
 
     //patroling
     public Vector3 targetSpot;
@@ -49,7 +51,7 @@ public class EnemyManager : MonoBehaviour
 
         if (!playerInSightRange && !playerInAttackRange) Patrolling();
         if (playerInSightRange && !playerInAttackRange) Chasing();
-        if (playerInSightRange && playerInAttackRange) Attacking();
+        //if (playerInSightRange && playerInAttackRange) Attacking();
     }
 
     private void Patrolling()
@@ -64,7 +66,7 @@ public class EnemyManager : MonoBehaviour
             transform.position = targetPosition;
         }
 
-        Vector3 distanceToTargetSpot= transform.position - targetSpot;
+        Vector3 distanceToTargetSpot = transform.position - targetSpot;
 
         //walkpoint reached
         if (distanceToTargetSpot.magnitude < 1f)
@@ -86,10 +88,14 @@ public class EnemyManager : MonoBehaviour
 
     private void Chasing()
     {
-        //ai.SetDestination(player.position);
-    }
+        Vector3 targetPosition = Vector3.SmoothDamp
+        (transform.position, playerTransform.position, ref enemyVelocity, enemySpeed);
 
-    private void Attacking()
+        transform.position = targetPosition;
+    }
+}
+
+/*    private void Attacking()
     {
         ai.SetDestination(transform.position);
 
@@ -108,5 +114,5 @@ public class EnemyManager : MonoBehaviour
     private void ResetAttack()
     {
         alreadyAttacked = false;
-    }
+    };*/
 
