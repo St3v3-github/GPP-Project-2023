@@ -10,8 +10,6 @@ public class EnemyManager : MonoBehaviour
     Transform playerTransform;
     Rigidbody enemyRB;
 
-    public Vector3 targetPosition;
-
     public LayerMask Ground, Player;
 
     private Vector3 enemyVelocity = Vector3.zero;
@@ -88,10 +86,13 @@ public class EnemyManager : MonoBehaviour
 
     private void Chasing()
     {
-        Vector3 targetPosition = Vector3.SmoothDamp
+/*        Vector3 targetPosition = Vector3.SmoothDamp
         (transform.position, playerTransform.position, ref enemyVelocity, enemySpeed);
 
-        transform.position = targetPosition;
+        transform.position = targetPosition;*/
+
+        //transform.Translate(playerTransform.position);
+
     }
 }
 
