@@ -3,31 +3,36 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 public class EnemyManager : MonoBehaviour
 {
     Vector3 moveDirection;
-    Transform playerTransform;
-    Rigidbody enemyRB;
+    [SerializeField] private Rigidbody enemyRB;
+    [SerializeField] private Rigidbody playerRB;
 
-    public LayerMask Ground, Player;
+    [SerializeField] private LayerMask Ground, Player;
 
-    private Vector3 enemyVelocity = Vector3.zero;
-    public float enemySpeed = .5f;
-    public float rotationSpeed = 10.0f;
+    [SerializeField] private Vector3 enemyVelocity = Vector3.zero;
+    [SerializeField] private float enemySpeed = 1f;
+    [SerializeField] private float rotationSpeed = 10.0f;
 
     //patroling
-    public Vector3 targetSpot;
-    bool targetSpotSet;
-    public float targetSpotRange;
+   [SerializeField] private Vector3 patrolSpot;
+    [SerializeField] private bool patrolSpotSet = false;
+    [SerializeField] private float patrolSpotRange;
+
+    //hunting
+    [SerializeField] private Vector3 huntingSpot;
+    [SerializeField] private bool huntingSpotSet = false;
 
     //attacking 
-    public float timeBetweenAttacks;
-    bool alreadyAttacked;
+    [SerializeField] private float timeBetweenAttacks;
+    [SerializeField] private bool alreadyAttacked;
 
     //states
-    public float sightRange, attackRange;
-    public bool playerInSightRange, playerInAttackRange;
+    [SerializeField] private float sightRange, attackRange;
+    [SerializeField] private bool playerInSightRange, playerInAttackRange;
 
 
 
@@ -37,8 +42,6 @@ public class EnemyManager : MonoBehaviour
         //agent = GetComponent<NavMeshAgent>();
 
         enemyRB = GetComponent<Rigidbody>();
-        playerTransform = GameObject.Find("Player").transform;
-
     }
 
     private void Update()
@@ -47,54 +50,97 @@ public class EnemyManager : MonoBehaviour
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, Player);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, Player);
 
-        if (!playerInSightRange && !playerInAttackRange) Patrolling();
-        if (playerInSightRange && !playerInAttackRange) Chasing();
+        if (!playerInSightRange && !playerInAttackRange)
+        {
+            Patrolling();
+            huntingSpotSet = false;
+        }
+
+        if (playerInSightRange && !playerInAttackRange)
+        {
+            Hunting();
+            patrolSpotSet = false;
+        }
+
         //if (playerInSightRange && playerInAttackRange) Attacking();
     }
 
     private void Patrolling()
     {
-        if (!targetSpotSet) SearchTargetSpot();
 
-        if (targetSpotSet)
+        if (!patrolSpotSet) ChoosePatrolSpot();
+
+        if (patrolSpotSet)
         {
-            Vector3 targetPosition = Vector3.SmoothDamp
-            (transform.position, targetSpot, ref enemyVelocity, enemySpeed);
+            Vector3 patrolPosition = Vector3.SmoothDamp
+            (transform.position, patrolSpot, ref enemyVelocity, enemySpeed);
 
-            transform.position = targetPosition;
+            transform.position = patrolPosition;
         }
 
-        Vector3 distanceToTargetSpot = transform.position - targetSpot;
+        Vector3 distanceToPatrolSpot = transform.position - patrolSpot;
 
         //walkpoint reached
-        if (distanceToTargetSpot.magnitude < 1f)
-            targetSpotSet = false;
+        if (distanceToPatrolSpot.magnitude < 1f)
+            patrolSpotSet = false;
 
     }
 
-    private void SearchTargetSpot()
+    private void ChoosePatrolSpot()
     {
         //calculate random point in range 
-        float randomZ = Random.Range(-targetSpotRange, targetSpotRange);
-        float randomX = Random.Range(-targetSpotRange, targetSpotRange);
+        float randomZ = Random.Range(-patrolSpotRange, patrolSpotRange);
+        float randomX = Random.Range(-patrolSpotRange, patrolSpotRange);
 
-        targetSpot = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+        patrolSpot = new Vector3(transform.position.x * randomX, transform.position.y, transform.position.z * randomZ);
 
-        if (Physics.Raycast(targetSpot, -transform.up, 2f, Ground))
-            targetSpotSet = true;
+        if (Physics.Raycast(patrolSpot, -transform.up, 2f, Ground))
+            patrolSpotSet = true;
     }
 
-    private void Chasing()
+    private void ChooseHuntingSpot()
     {
-/*        Vector3 targetPosition = Vector3.SmoothDamp
-        (transform.position, playerTransform.position, ref enemyVelocity, enemySpeed);
+        huntingSpot = new Vector3(playerRB.transform.position.x, transform.position.y, playerRB.transform.position.z);
 
-        transform.position = targetPosition;*/
+        if (Physics.Raycast(huntingSpot, -transform.up, 2f, Ground))
+            huntingSpotSet = true;
+    }
+
+
+
+    private void Hunting()
+    {
+        /*        Vector3 targetPosition = Vector3.SmoothDamp
+                (transform.position, playerTransform.position, ref enemyVelocity, enemySpeed);
+
+                transform.position = targetPosition;*/
 
         //transform.Translate(playerTransform.position);
 
+      
+        if (!huntingSpotSet) ChooseHuntingSpot();
+
+        if (huntingSpotSet)
+        {
+            Vector3 huntingPosition = Vector3.SmoothDamp
+            (transform.position, huntingSpot, ref enemyVelocity, enemySpeed);
+
+            transform.position = huntingPosition;
+        }
+
+        Vector3 distanceToHuntingSpot = transform.position - huntingSpot;
+
+        //walkpoint reached
+        if (distanceToHuntingSpot.magnitude < 1f)
+            huntingSpotSet = false;
+
+
+
+
+
     }
 }
+
 
 /*    private void Attacking()
     {
