@@ -7,18 +7,17 @@ using UnityEngine.UIElements;
 
 public class EnemyManager : MonoBehaviour
 {
-    Vector3 moveDirection;
     [SerializeField] private Rigidbody enemyRB;
     [SerializeField] private Rigidbody playerRB;
 
     [SerializeField] private LayerMask Ground, Player;
 
-    [SerializeField] private Vector3 enemyVelocity = Vector3.zero;
-    [SerializeField] private float enemySpeed = 1f;
-    [SerializeField] private float rotationSpeed = 10.0f;
+    [SerializeField] private float enemySpeed = 1.0f;
+    private Vector3 enemyVelocity = Vector3.zero;
+    private Vector3 moveDirection;
 
     //patroling
-   [SerializeField] private Vector3 patrolSpot;
+    [SerializeField] private Vector3 patrolSpot;
     [SerializeField] private bool patrolSpotSet = false;
     [SerializeField] private float patrolSpotRange;
 
@@ -62,7 +61,11 @@ public class EnemyManager : MonoBehaviour
             patrolSpotSet = false;
         }
 
-        //if (playerInSightRange && playerInAttackRange) Attacking();
+        if (playerInSightRange && playerInAttackRange)
+        {
+            Hunting();
+            Attacking();
+        }
     }
 
     private void Patrolling()
@@ -133,26 +136,12 @@ public class EnemyManager : MonoBehaviour
         //walkpoint reached
         if (distanceToHuntingSpot.magnitude < 1f)
             huntingSpotSet = false;
-
-
-
-
-
     }
-}
 
-
-/*    private void Attacking()
+private void Attacking()
     {
-        ai.SetDestination(transform.position);
-
-        transform.LookAt(player);
-
         if (!alreadyAttacked)
         {
-            //attack code here
-
-
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
@@ -161,5 +150,11 @@ public class EnemyManager : MonoBehaviour
     private void ResetAttack()
     {
         alreadyAttacked = false;
-    };*/
+    }
 
+    private void OnCollisionStay()
+    {
+        if (alreadyAttacked) 
+        Debug.Log("Hit");
+    }
+}
