@@ -43,7 +43,7 @@ public class EnemyManager : MonoBehaviour
         enemyRB = GetComponent<Rigidbody>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         //check for sight and attack range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, Player);
@@ -142,6 +142,8 @@ private void Attacking()
     {
         if (!alreadyAttacked)
         {
+
+            playerRB.AddForce(0, 100, 0, ForceMode.Impulse);
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
