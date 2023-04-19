@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -12,7 +13,7 @@ public class EnemyManager : MonoBehaviour
 
     [SerializeField] private LayerMask Ground, Player;
 
-    [SerializeField] private float enemySpeed = 1.0f;
+    [SerializeField] private float enemySpeed = 75.0f;
     private Vector3 enemyVelocity = Vector3.zero;
     private Vector3 moveDirection;
 
@@ -33,7 +34,16 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private float sightRange, attackRange;
     [SerializeField] private bool playerInSightRange, playerInAttackRange;
 
+    //jumpstuff
+    public bool isGrounded = false;
 
+    private float gravity = -9.81f;
+    public float gravityMod = 150.0f;
+    private Vector3 gravityVector;
+
+    public float jumpPower;
+    private Vector3 jumpVector;
+    public bool canJump = true;
 
     private void Awake()
     {
@@ -45,6 +55,8 @@ public class EnemyManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Jump();
+
         //check for sight and attack range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, Player);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, Player);
@@ -86,6 +98,8 @@ public class EnemyManager : MonoBehaviour
         //walkpoint reached
         if (distanceToPatrolSpot.magnitude < 1f)
             patrolSpotSet = false;
+            enemyVelocity = Vector3.zero;
+        
 
     }
 
@@ -136,6 +150,7 @@ public class EnemyManager : MonoBehaviour
         //walkpoint reached
         if (distanceToHuntingSpot.magnitude < 1f)
             huntingSpotSet = false;
+            enemyVelocity = Vector3.zero;
     }
 
 private void Attacking()
@@ -154,9 +169,73 @@ private void Attacking()
         alreadyAttacked = false;
     }
 
-    private void OnCollisionStay()
+    public void Jump()
     {
+        if (canJump)
+        {
+            //animator.SetBool("isJumping", true);
+            playerRB.AddForce(transform.up * jumpPower, ForceMode.Impulse);
+            canJump = false;
+        }
+    }
+
+        private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            isGrounded = true;
+            canJump = true;
+        }
+
         if (alreadyAttacked) 
         Debug.Log("Hit");
     }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        isGrounded = false;
+    }
+
+
 }
+
+
+
+
+
+////Attempt 2
+///
+
+/*public class EnemyManager : MonoBehaviour
+{
+    private void Awake()
+    {
+        playerRB = GetComponent<Rigidbody>();
+        enemyRB = GetComponent<Rigidbody>();
+    }
+
+    Public Void HandleAllStates()
+    {
+        //check for sight and attack range
+        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, Player);
+        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, Player);
+
+        if (!playerInSightRange && !playerInAttackRange)
+        {
+            Patrolling();
+            huntingSpotSet = false;
+        }
+
+        if (playerInSightRange && !playerInAttackRange)
+        {
+            Hunting();
+            patrolSpotSet = false;
+        }
+
+        if (playerInSightRange && playerInAttackRange)
+        {
+            Hunting();
+            Attacking();
+        }
+    }
+}*/
