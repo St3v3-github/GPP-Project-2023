@@ -1,10 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UIElements;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -13,12 +10,12 @@ public class EnemyManager : MonoBehaviour
 
     [SerializeField] private LayerMask Ground, Player;
 
-    [SerializeField] private float enemySpeed = 75.0f;
+    [SerializeField] private float enemySpeed = 10f;
     private Vector3 enemyVelocity = Vector3.zero;
     private Vector3 moveDirection;
 
     //patroling
-    [SerializeField] private Vector3 patrolSpot;
+     [SerializeField] private Vector3 patrolSpot;
     [SerializeField] private bool patrolSpotSet = false;
     [SerializeField] private float patrolSpotRange;
 
@@ -98,13 +95,13 @@ public class EnemyManager : MonoBehaviour
         //walkpoint reached
         if (distanceToPatrolSpot.magnitude < 1f)
             patrolSpotSet = false;
-            enemyVelocity = Vector3.zero;
-        
 
     }
 
     private void ChoosePatrolSpot()
     {
+        enemyVelocity = Vector3.zero;
+
         //calculate random point in range 
         float randomZ = Random.Range(-patrolSpotRange, patrolSpotRange);
         float randomX = Random.Range(-patrolSpotRange, patrolSpotRange);
@@ -117,6 +114,8 @@ public class EnemyManager : MonoBehaviour
 
     private void ChooseHuntingSpot()
     {
+        enemyVelocity = Vector3.zero;
+
         huntingSpot = new Vector3(playerRB.transform.position.x, transform.position.y, playerRB.transform.position.z);
 
         if (Physics.Raycast(huntingSpot, -transform.up, 2f, Ground))
@@ -150,7 +149,6 @@ public class EnemyManager : MonoBehaviour
         //walkpoint reached
         if (distanceToHuntingSpot.magnitude < 1f)
             huntingSpotSet = false;
-            enemyVelocity = Vector3.zero;
     }
 
 private void Attacking()

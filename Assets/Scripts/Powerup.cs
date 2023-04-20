@@ -22,9 +22,7 @@ public class Powerup : MonoBehaviour
 
         //powerup goes here
         //playerMotion.runSpeed *= multiplier;
-        physicsManager.jump
-
-
+       
         gameObject.transform.position = new Vector3(0, -50, 0);
 
         yield return new WaitForSeconds(waitTime);
