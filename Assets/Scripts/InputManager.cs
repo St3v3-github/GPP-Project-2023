@@ -6,6 +6,8 @@ public class InputManager : MonoBehaviour
 {
     PlayerControls playerControls;
     PhysicsManager physicsManager;
+    ButtonLogic buttonLogic;
+
     Rigidbody playerRB;
     Animator animator;
 
@@ -14,6 +16,8 @@ public class InputManager : MonoBehaviour
 
     public bool jumpInput = false;
     public bool sprintInput = false;
+
+    public bool SelectingInput = false;
 
     public float cameraInputX;
     public float cameraInputY;
@@ -25,6 +29,7 @@ public class InputManager : MonoBehaviour
     private void Awake()
     {
         physicsManager = FindObjectOfType<PhysicsManager>();
+        buttonLogic = FindObjectOfType<ButtonLogic>();
         playerRB = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
     }
@@ -35,6 +40,7 @@ public class InputManager : MonoBehaviour
         HandleCameraInput();
         HandleJumpInput();
         HandleSprintInput();
+        HandleSelectInput();
     }
 
 
@@ -85,6 +91,15 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    private void HandleSelectInput()
+    {
+        if (SelectingInput && buttonLogic.btnPressable)
+        {
+                buttonLogic.DoorOpen();
+                SelectingInput = false;
+        }
+    }
+
     private void OnEnable()
     {
         if (playerControls == null)
@@ -99,6 +114,9 @@ public class InputManager : MonoBehaviour
 
             playerControls.PlayerMovement.Sprint.started += ctx => sprintInput = true;
             playerControls.PlayerMovement.Sprint.canceled += ctx => sprintInput = false;
+
+            playerControls.PlayerMovement.Select.started += ctx => SelectingInput = true;
+            playerControls.PlayerMovement.Select.canceled += ctx => SelectingInput = false;
         }
 
         playerControls.Enable();
