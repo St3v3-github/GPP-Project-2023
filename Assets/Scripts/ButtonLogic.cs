@@ -13,7 +13,7 @@ public class ButtonLogic : MonoBehaviour
     public GameObject timeline;
 
     void Awake()
-    {
+    { 
         door = GameObject.Find("Door");
 
         director = timeline.GetComponent<PlayableDirector>();
@@ -23,6 +23,9 @@ public class ButtonLogic : MonoBehaviour
     public void DoorOpen()
     {
         director.Play();
+
+        
+   
     }
 
 private void OnTriggerEnter()

@@ -7,6 +7,9 @@ public class InputManager : MonoBehaviour
     PlayerControls playerControls;
     PhysicsManager physicsManager;
     ButtonLogic buttonLogic;
+    
+    public GameObject cam;
+
 
     Rigidbody playerRB;
     Animator animator;
@@ -32,6 +35,9 @@ public class InputManager : MonoBehaviour
         buttonLogic = FindObjectOfType<ButtonLogic>();
         playerRB = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+
+        cam = GameObject.Find("CutsceneCam");
+        cam.SetActive(false);
     }
 
     public void HandleAllInputs()
@@ -95,8 +101,14 @@ public class InputManager : MonoBehaviour
     {
         if (SelectingInput && buttonLogic.btnPressable)
         {
-                buttonLogic.DoorOpen();
-                SelectingInput = false;
+            cam.SetActive(true);
+            buttonLogic.DoorOpen();
+            SelectingInput = false;
+        }
+
+        else if (!buttonLogic.btnPressable)
+        {
+            cam.SetActive(false);
         }
     }
 
