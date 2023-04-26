@@ -7,6 +7,8 @@ public class Powerup : MonoBehaviour
     public float multiplier = 1.4f;
     public float waitTime = 2f;
 
+    public bool aquired = false;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -17,11 +19,12 @@ public class Powerup : MonoBehaviour
 
     IEnumerator Pickup(Collider player)
     {
-        //PlayerMotion  playerMotion = player.GetComponent<PlayerMotion>();
-        PhysicsManager physicsManager = player.GetComponent<PhysicsManager>();
+        //PhysicsManager physicsManager = player.GetComponent<PhysicsManager>();
 
         //powerup goes here
         //playerMotion.runSpeed *= multiplier;
+
+        aquired = true;
        
         gameObject.transform.position = new Vector3(0, -50, 0);
 

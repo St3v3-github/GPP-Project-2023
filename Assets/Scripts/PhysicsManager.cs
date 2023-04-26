@@ -2,12 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PhysicsManager : MonoBehaviour
 {
     InputManager inputManager;
+    Powerup powerup;
+
     Rigidbody playerRB;
     Animator animator;
 
@@ -19,16 +22,14 @@ public class PhysicsManager : MonoBehaviour
     private Vector3 gravityVector;
 
     public float jumpPower;
-    public float doubleJumpMod = 2f;
     private Vector3 jumpVector;
+    public int jumps = 0;
 
 
+    //public float doubleJumpMod = 2f;
 
-    public bool canJump = true;
-    public bool canDoubleJump = false;
-
-/*    public int numberOfJumps = 0;
-    public int maxJumps = 2;*/
+    //public bool canJump = true;
+    //public bool canDoubleJump = false;
 
 
     private void Awake()
@@ -36,45 +37,52 @@ public class PhysicsManager : MonoBehaviour
         inputManager = GetComponent<InputManager>();
         playerRB = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+
+        powerup = FindObjectOfType<Powerup>();
     }
 
-    private void Update()
+/*    private void FixedUpdate()
     {
         ApplyGravity();
-    }
+    }*/
 
 
     public void Jump()
     {
-        if (canJump)
+        if (isGrounded)
         {
-            //animator.SetBool("isJumping", true);
+            animator.SetBool("isJumping", true);
             playerRB.AddForce(transform.up * jumpPower, ForceMode.Impulse);
-            canJump = false;
-            canDoubleJump = true;
-
+           
         }
 
-        if (canDoubleJump)
+        if (powerup.aquired == true)
         {
-            //animator.SetBool("isJumping", true);
-            animator.Play("Base Layer.Idle Jump 0", 0, 0);
-            playerRB.AddForce(transform.up * jumpPower * doubleJumpMod , ForceMode.Impulse);
-            canDoubleJump = false;
+            if (jumps == 1)
+            {
+                animator.Play("Base Layer.Idle Jump 0", 0, 0);
+                playerRB.AddForce(transform.up * jumpPower, ForceMode.Impulse);
+                jumps++;
+            }
         }
+        /*        {
+            canDoubleJump = true;
+        }*/
+        /* if (canDoubleJump)
+         {
+             //animator.SetBool("isJumping", true);
+             animator.Play("Base Layer.Idle Jump 0", 0, 0);
+             playerRB.AddForce(transform.up * jumpPower * doubleJumpMod , ForceMode.Impulse);
+             canDoubleJump = false;
+         }*/
     }
 
     private void ApplyGravity()
     {
-        if (isGrounded && velocity < 0.0f)
-        {
-            velocity = -1.0f;
-        }
+        if (isGrounded && velocity < 0.0f) {
+            velocity = -1.0f; }
 
-        else
-        {
-            velocity += gravity * gravityMod * Time.deltaTime;
-        }
+        else { velocity += gravity * gravityMod; }
 
         gravityVector.y = velocity;
         playerRB.AddForce(transform.up * gravityVector.y, ForceMode.Acceleration);
@@ -82,18 +90,20 @@ public class PhysicsManager : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.tag == "Ground")
+        if (collision.gameObject.tag == "Ground") //&& powerup.aquired)
         {
             animator.SetBool("isJumping", false);
             isGrounded = true;
-            canJump = true;
+            jumps = 0;
+   
         }
-
     }
 
     private void OnCollisionExit(Collision collision)
     {
         isGrounded = false;
+        jumps++;
+       
     }
 }
 

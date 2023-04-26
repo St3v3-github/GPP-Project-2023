@@ -303,6 +303,17 @@
                 },
                 {
                     "name": "",
+                    "id": "c744d9ee-601e-490d-a3b0-6641eecffe8c",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "c4569876-2277-471e-bf26-fdf374234877",
                     "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
@@ -314,8 +325,30 @@
                 },
                 {
                     "name": "",
+                    "id": "fd98f63c-9ada-43a1-aee8-af5771cd12db",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LockOnCam",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "3b0e116b-946b-4618-a300-47faec6785f7",
                     "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8b745b54-aeee-44cc-ad9f-7cac5dc1ad3b",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
