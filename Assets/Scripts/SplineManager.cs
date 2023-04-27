@@ -20,8 +20,10 @@ public class SplineManager : MonoBehaviour
     [SerializeField] private Transform pointSplineCam;
 
     private Vector3 positionInSpline;
-    private GameObject splineCam;
+    //private GameObject splineCam;
     private GameObject MainCam;
+
+    [SerializeField] private bool InBox = false;
 
 
     void Awake()
@@ -30,8 +32,8 @@ public class SplineManager : MonoBehaviour
         playerMotion = FindObjectOfType<PlayerMotion>();
         cameraManager = FindObjectOfType<CameraManager>();
 
-        splineCam = GameObject.Find("splineCam");
-        splineCam.SetActive(false);
+/*        splineCam = GameObject.Find("splineCam");
+        splineCam.SetActive(false);*/
 
         MainCam = GameObject.Find("MainCam");
         MainCam.SetActive(true);
@@ -48,9 +50,10 @@ public class SplineManager : MonoBehaviour
         // to get a-b-c then interpolates between a-b-c & b-c-d
         positionInSpline = CubicLerp(pointA.position, pointB.position, pointC.position, pointD.position, interpolateAmount);
 
-        if (splineCam)
+        if (InBox)
         {
             pointSplineCam.position = positionInSpline;
+            //cameraManager.
         }
     }
 
@@ -86,9 +89,11 @@ public class SplineManager : MonoBehaviour
     {
         if (col.gameObject.tag == "Player")
         {
-            splineCam.SetActive(true);
-            MainCam.SetActive(false);
-            cameraManager.c
+            // splineCam.SetActive(true);
+            //MainCam.SetActive(false);
+
+            InBox = true;
+         
         }
     }
 
@@ -97,8 +102,10 @@ public class SplineManager : MonoBehaviour
     {
         if (col.gameObject.tag == "Player")
         {
-            splineCam.SetActive(false);
-            MainCam.SetActive(true);
+            //splineCam.SetActive(false);
+            //MainCam.SetActive(true);
+
+            InBox = false;
         }
     }
 }
