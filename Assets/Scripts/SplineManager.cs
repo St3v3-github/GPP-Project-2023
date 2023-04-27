@@ -23,7 +23,7 @@ public class SplineManager : MonoBehaviour
     //private GameObject splineCam;
     private GameObject MainCam;
 
-    [SerializeField] private bool InBox = false;
+    public bool InBox = false;
 
 
     void Awake()
@@ -35,8 +35,8 @@ public class SplineManager : MonoBehaviour
 /*        splineCam = GameObject.Find("splineCam");
         splineCam.SetActive(false);*/
 
-        MainCam = GameObject.Find("MainCam");
-        MainCam.SetActive(true);
+/*        MainCam = GameObject.Find("MainCam");
+        MainCam.SetActive(true);*/
     }
 
 
@@ -83,6 +83,9 @@ public class SplineManager : MonoBehaviour
 
         return Vector3.Lerp(ab_bc, bc_cd, interpolateAmount);
     }
+
+
+
 
     //Player detection + enable/disable spline cam
     private void OnTriggerStay(Collider col)

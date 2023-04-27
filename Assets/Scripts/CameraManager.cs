@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 public class CameraManager : MonoBehaviour
 {
     InputManager inputManager;
+    SplineManager splineManager;
 
     public Transform targetTransform;       //Object camera follows
     public Transform cameraPivot;             //Object camera pivots on
@@ -16,13 +17,14 @@ public class CameraManager : MonoBehaviour
     private Vector3 cameraFollowVelocity = Vector3.zero;
     private Vector3 cameraVectorPosition;
 
+    [SerializeField] private GameObject player;
+
     public float cameraCollisionOffset = 0.2f;       //how much camera will jump off objects.
     public float minimumCollisionOffset = 0.2f;
     public float cameraCollisionRadius = 0.2f;
     public float cameraFollowSpeed = 0.2f;
     public float cameraLookSpeed = 5f;
     public float cameraPivotSpeed = 5f;
-
 
     public float lookAngle;     //up and down
     public float pivotAngle;    //left and right
@@ -33,15 +35,26 @@ public class CameraManager : MonoBehaviour
     {
         inputManager = FindObjectOfType<InputManager>();
         targetTransform = FindObjectOfType<PlayerManager>().transform;
+        splineManager = FindObjectOfType<SplineManager>();
         cameraTransform = Camera.main.transform;
         defaultPosition = cameraTransform.localPosition.z;
+
     }
 
     public void HandleAllCameraMovement()
     {
-        FollowTarget();
-        RotateCamera();
-        HandleCameraCollisions();
+        if (!splineManager.InBox)
+        {
+            RotateCamera();
+            FollowTarget();
+            HandleCameraCollisions();
+        }
+
+        else
+        {
+            splineRules();
+
+        }
     }
 
     private void FollowTarget()
@@ -95,4 +108,11 @@ public class CameraManager : MonoBehaviour
         cameraTransform.localPosition = cameraVectorPosition;
     }
 
+    private void splineRules()
+    {
+        Vector3 lookAtPosition = player.transform.position + transform.up * 1.8f;
+        var targetRotation = Quaternion.LookRotation(lookAtPosition - transform.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
+
+    }
 }

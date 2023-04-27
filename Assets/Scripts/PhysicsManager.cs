@@ -18,7 +18,7 @@ public class PhysicsManager : MonoBehaviour
     public bool isGrounded = false;
 
     private float gravity = -9.81f;
-    public float gravityMod = 150.0f;
+    public float gravityMod = 1;
     private Vector3 gravityVector;
 
     public float jumpPower;
@@ -52,7 +52,7 @@ public class PhysicsManager : MonoBehaviour
         if (isGrounded)
         {
             animator.SetBool("isJumping", true);
-            playerRB.AddForce(transform.up * jumpPower, ForceMode.Impulse);
+            playerRB.AddForce(transform.up * jumpPower);
            
         }
 
@@ -61,7 +61,7 @@ public class PhysicsManager : MonoBehaviour
             if (jumps == 1)
             {
                 animator.Play("Base Layer.Idle Jump 0", 0, 0);
-                playerRB.AddForce(transform.up * jumpPower, ForceMode.Impulse);
+                playerRB.AddForce(transform.up * jumpPower);
                 jumps++;
             }
         }
