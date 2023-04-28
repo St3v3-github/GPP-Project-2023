@@ -118,7 +118,7 @@ public class InputManager : MonoBehaviour
 
     private void HandleFightingInput()
     {
-        if (FightingInput )
+        if (FightingInput)
         {
             animator.Play("Base Layer.MMA Kick", 0, 0.25f);
         }

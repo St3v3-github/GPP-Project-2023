@@ -11,9 +11,9 @@ public class PlayerManager: MonoBehaviour
 
     private void Awake()
     {
-       inputManager= GetComponent<InputManager>();
-       cameraManager= FindObjectOfType<CameraManager>();
-       playerMotion= GetComponent<PlayerMotion>();
+        inputManager = GetComponent<InputManager>();
+        cameraManager = FindObjectOfType<CameraManager>();
+        playerMotion = GetComponent<PlayerMotion>();
     }
 
     private void Update()

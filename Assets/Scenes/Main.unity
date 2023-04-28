@@ -1820,9 +1820,9 @@ GameObject:
   - component: {fileID: 858596365}
   - component: {fileID: 858596364}
   - component: {fileID: 858596369}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy 1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4399,6 +4399,31 @@ MonoBehaviour:
   gravityMod: 0
   jumpPower: 50000
   jumps: 0
+--- !u!114 &1761970563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 456437221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 572a680c00ca71341861ecff0cc0ac5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyRB: {fileID: 858596364}
+  Ground:
+    serializedVersion: 2
+    m_Bits: 128
+  Enemy:
+    serializedVersion: 2
+    m_Bits: 256
+  attackRange: 2
+  InAttackRange: 0
+  bonkUp: 2
+  bonkBack: 5
+  enemyHealth: 100
+  enemyObject: {fileID: 858596363}
 --- !u!1 &1792084568
 GameObject:
   m_ObjectHideFlags: 0
