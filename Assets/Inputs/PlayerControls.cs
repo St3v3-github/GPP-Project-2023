@@ -89,6 +89,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChunLiKick"",
+                    ""type"": ""Button"",
+                    ""id"": ""bcd0ce93-cbc8-43ca-94ec-57b530d74d8b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -375,6 +384,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d8922bc9-aba3-45fb-82a5-9de8904a3682"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChunLiKick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1255,6 +1275,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_PlayerMovement_Select = m_PlayerMovement.FindAction("Select", throwIfNotFound: true);
         m_PlayerMovement_LockOnCam = m_PlayerMovement.FindAction("LockOnCam", throwIfNotFound: true);
         m_PlayerMovement_Attack = m_PlayerMovement.FindAction("Attack", throwIfNotFound: true);
+        m_PlayerMovement_ChunLiKick = m_PlayerMovement.FindAction("ChunLiKick", throwIfNotFound: true);
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
@@ -1339,6 +1360,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerMovement_Select;
     private readonly InputAction m_PlayerMovement_LockOnCam;
     private readonly InputAction m_PlayerMovement_Attack;
+    private readonly InputAction m_PlayerMovement_ChunLiKick;
     public struct PlayerMovementActions
     {
         private @PlayerControls m_Wrapper;
@@ -1350,6 +1372,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Select => m_Wrapper.m_PlayerMovement_Select;
         public InputAction @LockOnCam => m_Wrapper.m_PlayerMovement_LockOnCam;
         public InputAction @Attack => m_Wrapper.m_PlayerMovement_Attack;
+        public InputAction @ChunLiKick => m_Wrapper.m_PlayerMovement_ChunLiKick;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1380,6 +1403,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Attack.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnAttack;
                 @Attack.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnAttack;
                 @Attack.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnAttack;
+                @ChunLiKick.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnChunLiKick;
+                @ChunLiKick.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnChunLiKick;
+                @ChunLiKick.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnChunLiKick;
             }
             m_Wrapper.m_PlayerMovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -1405,6 +1431,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Attack.started += instance.OnAttack;
                 @Attack.performed += instance.OnAttack;
                 @Attack.canceled += instance.OnAttack;
+                @ChunLiKick.started += instance.OnChunLiKick;
+                @ChunLiKick.performed += instance.OnChunLiKick;
+                @ChunLiKick.canceled += instance.OnChunLiKick;
             }
         }
     }
@@ -1625,6 +1654,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnSelect(InputAction.CallbackContext context);
         void OnLockOnCam(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
+        void OnChunLiKick(InputAction.CallbackContext context);
     }
     public interface IPlayerActions
     {
