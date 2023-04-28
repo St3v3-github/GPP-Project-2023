@@ -31,29 +31,14 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private float sightRange, attackRange;
     [SerializeField] private bool playerInSightRange, playerInAttackRange;
 
-    //jumpstuff
-    public bool isGrounded = false;
-
-    private float gravity = -9.81f;
-    public float gravityMod = 150.0f;
-    private Vector3 gravityVector;
-
-    public float jumpPower;
-    private Vector3 jumpVector;
-    public bool canJump = true;
 
     private void Awake()
     {
-        //player = GameObject.Find("Player").transform;
-        //agent = GetComponent<NavMeshAgent>();
-
         enemyRB = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate()
     {
-        Jump();
-
         //check for sight and attack range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, Player);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, Player);
@@ -166,23 +151,12 @@ private void Attacking()
     {
         alreadyAttacked = false;
     }
-
-    public void Jump()
-    {
-        if (canJump)
-        {
-            //animator.SetBool("isJumping", true);
-            playerRB.AddForce(transform.up * jumpPower, ForceMode.Impulse);
-            canJump = false;
-        }
-    }
-
-        private void OnCollisionStay(Collision collision)
+    
+    private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.tag == "Ground")
         {
-            isGrounded = true;
-            canJump = true;
+
         }
 
         if (alreadyAttacked) 
@@ -191,7 +165,7 @@ private void Attacking()
 
     private void OnCollisionExit(Collision collision)
     {
-        isGrounded = false;
+
     }
 
 

@@ -22,6 +22,9 @@ public class InputManager : MonoBehaviour
 
     public bool SelectingInput = false;
 
+    public bool FightingInput = false;
+    public bool ChunLiInput = false;
+
     public float cameraInputX;
     public float cameraInputY;
 
@@ -46,6 +49,7 @@ public class InputManager : MonoBehaviour
         HandleCameraInput();
         HandleJumpInput();
         HandleSprintInput();
+        HandleFightingInput();
         HandleSelectInput();
     }
 
@@ -112,6 +116,19 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    private void HandleFightingInput()
+    {
+        if (FightingInput )
+        {
+            animator.Play("Base Layer.MMA Kick", 0, 0.25f);
+        }
+
+        else
+        {
+            animator.SetBool("IsFighting", false);
+        }
+    }
+
     private void OnEnable()
     {
         if (playerControls == null)
@@ -129,6 +146,9 @@ public class InputManager : MonoBehaviour
 
             playerControls.PlayerMovement.Select.started += ctx => SelectingInput = true;
             playerControls.PlayerMovement.Select.canceled += ctx => SelectingInput = false;
+
+            playerControls.PlayerMovement.Attack.started += ctx => FightingInput = true;
+            playerControls.PlayerMovement.Attack.canceled += ctx => FightingInput = false;
         }
 
         playerControls.Enable();
