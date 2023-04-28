@@ -85,7 +85,7 @@ public class PhysicsManager : MonoBehaviour
         else { velocity += gravity * gravityMod; }
 
         gravityVector.y = velocity;
-        playerRB.AddForce(transform.up * gravityVector.y, ForceMode.Acceleration);
+        playerRB.AddForce(transform.up * gravityVector.y);
     }
 
     private void OnCollisionStay(Collision collision)
