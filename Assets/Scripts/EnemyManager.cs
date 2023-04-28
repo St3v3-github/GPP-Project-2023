@@ -43,6 +43,7 @@ public class EnemyManager : MonoBehaviour
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, Player);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, Player);
 
+
         if (!playerInSightRange && !playerInAttackRange)
         {
             Patrolling();
@@ -53,13 +54,24 @@ public class EnemyManager : MonoBehaviour
         {
             Hunting();
             patrolSpotSet = false;
+
+            HandleEnemyRotation();
         }
 
         if (playerInSightRange && playerInAttackRange)
         {
             Hunting();
             Attacking();
+
+            HandleEnemyRotation();
         }
+    }
+
+    public void HandleEnemyRotation()
+    {
+        Vector3 lookAtPosition = playerRB.transform.position + transform.up * 1.8f;
+        var targetRotation = Quaternion.LookRotation(lookAtPosition - transform.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
     }
 
     private void Patrolling()
