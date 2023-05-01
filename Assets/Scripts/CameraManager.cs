@@ -52,7 +52,7 @@ public class CameraManager : MonoBehaviour
             FollowTarget();
             HandleCameraCollisions();
 
-            if (inputManager.LockOnInput)
+/*            if (inputManager.LockOnInput)
             {
                 lockOnCam.enabled = true;
             }
@@ -60,7 +60,7 @@ public class CameraManager : MonoBehaviour
             else
             {
                 lockOnCam.enabled = false;
-            }
+            }*/
 
         }
 

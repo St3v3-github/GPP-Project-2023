@@ -8,13 +8,17 @@ public class PlayerCombatManager : MonoBehaviour
     PlayerMotion playerMotion;
     EnemyManager enemyManager;
     EnemyVisualManager enemyVisualManager;
+    BossVisualManager bossVisualManager;
 
     public Rigidbody enemyRB;
+    public Rigidbody BossRB;
 
-    [SerializeField] private LayerMask Ground, Enemy;
+
+    [SerializeField] private LayerMask Ground, Enemy, Boss;
 
     [SerializeField] private float attackRange;
     [SerializeField] private bool InAttackRange;
+    [SerializeField] private bool InBossAttackRange;
 
     [SerializeField] private float bonkUp;
     [SerializeField] private float bonkBack;
@@ -22,14 +26,21 @@ public class PlayerCombatManager : MonoBehaviour
     [SerializeField] private float enemyHealth = 10;
     public GameObject enemyObject;
 
+    [SerializeField] private float bossHealth = 10;
+    public GameObject BossObject;
+
     private void Awake()
     {
         inputManager = GetComponent<InputManager>();
         playerMotion = GetComponent<PlayerMotion>();
         enemyManager = FindObjectOfType<EnemyManager>();
         enemyVisualManager = FindObjectOfType<EnemyVisualManager>();
+        bossVisualManager = FindObjectOfType<BossVisualManager>();
 
-        enemyRB = FindObjectOfType<EnemyManager>().GetComponent<Rigidbody>();
+
+        /*        enemyRB = FindObjectOfType<EnemyManager>().GetComponent<Rigidbody>();
+                BossRB = FindObjectOfType<EnemyManager>().GetComponent<Rigidbody>();*/
+
     }
 
     private void Update()
@@ -37,6 +48,11 @@ public class PlayerCombatManager : MonoBehaviour
         if (enemyHealth < 0)
         {
             enemyObject.SetActive(false);
+        }
+
+        if (bossHealth < 0)
+        {
+            BossObject.SetActive(false);
         }
     }
 
@@ -48,6 +64,13 @@ public class PlayerCombatManager : MonoBehaviour
         {
             HandleAttack();
         }
+
+        InBossAttackRange = Physics.CheckSphere(transform.position, attackRange, Boss);
+
+        if (InBossAttackRange && inputManager.FightingInput)
+        {
+            HandleBossAttack();
+        }
     }
 
     private void HandleAttack()
@@ -57,6 +80,16 @@ public class PlayerCombatManager : MonoBehaviour
 
         enemyHealth--;
         enemyVisualManager.Damage();
+
+    }
+
+    private void HandleBossAttack()
+    {
+        BossRB.AddForce(transform.up * bonkUp, ForceMode.Impulse);
+        BossRB.AddForce(transform.forward * -bonkBack, ForceMode.Impulse);
+
+        bossHealth--;
+        bossVisualManager.Damage();
 
     }
 }
