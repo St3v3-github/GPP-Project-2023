@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCombatManager: MonoBehaviour
+public class PlayerCombatManager : MonoBehaviour
 {
     InputManager inputManager;
     PlayerMotion playerMotion;
     EnemyManager enemyManager;
+    EnemyVisualManager enemyVisualManager;
 
-   public Rigidbody enemyRB;
+    public Rigidbody enemyRB;
 
     [SerializeField] private LayerMask Ground, Enemy;
 
@@ -26,8 +27,9 @@ public class PlayerCombatManager: MonoBehaviour
         inputManager = GetComponent<InputManager>();
         playerMotion = GetComponent<PlayerMotion>();
         enemyManager = FindObjectOfType<EnemyManager>();
+        enemyVisualManager = FindObjectOfType<EnemyVisualManager>();
 
-        enemyRB = FindObjectOfType<EnemyManager>().GetComponent<Rigidbody>();  
+        enemyRB = FindObjectOfType<EnemyManager>().GetComponent<Rigidbody>();
     }
 
     private void Update()
@@ -51,11 +53,10 @@ public class PlayerCombatManager: MonoBehaviour
     private void HandleAttack()
     {
         enemyRB.AddForce(transform.up * bonkUp, ForceMode.Impulse);
-        enemyRB.AddForce(transform.forward * - bonkBack, ForceMode.Impulse);
+        enemyRB.AddForce(transform.forward * -bonkBack, ForceMode.Impulse);
 
         enemyHealth--;
+        enemyVisualManager.Damage();
 
     }
-
 }
-
