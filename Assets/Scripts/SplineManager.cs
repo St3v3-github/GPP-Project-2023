@@ -28,7 +28,7 @@ public class SplineManager : MonoBehaviour
 
     void Awake()
     {
-        inputManager = FindObjectOfType<InputManager>();
+        //inputManager = FindObjectOfType<InputManager>();
         playerMotion = FindObjectOfType<PlayerMotion>();
         cameraManager = FindObjectOfType<CameraManager>();
 
