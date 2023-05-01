@@ -29,7 +29,7 @@ public class EnemyManager3 : MonoBehaviour
             timer = timer + Time.deltaTime;
             if (timer >= 2)
             {
-                newPos = new Vector3(transform.position.x + Random.Range(-5, 3), transform.position.y, transform.position.z + Random.Range(-5, 3));
+                newPos = new Vector3(transform.position.x + Random.Range(-20, 20), transform.position.y, transform.position.z + Random.Range(-20, 20));
             }
         }
         else

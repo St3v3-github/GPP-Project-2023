@@ -23,7 +23,8 @@ public class InputManager : MonoBehaviour
     public bool SelectingInput = false;
 
     public bool FightingInput = false;
-    public bool ChunLiInput = false;
+
+    public bool LockOnInput = false;
 
     public float cameraInputX;
     public float cameraInputY;
@@ -149,7 +150,11 @@ public class InputManager : MonoBehaviour
 
             playerControls.PlayerMovement.Attack.started += ctx => FightingInput = true;
             playerControls.PlayerMovement.Attack.canceled += ctx => FightingInput = false;
+
+            playerControls.PlayerMovement.LockOnCam.started += ctx => LockOnInput = true;
+            playerControls.PlayerMovement.LockOnCam.canceled += ctx => LockOnInput = false;
         }
+
 
         playerControls.Enable();
     }

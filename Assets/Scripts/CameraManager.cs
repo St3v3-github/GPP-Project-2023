@@ -8,6 +8,7 @@ public class CameraManager : MonoBehaviour
 {
     InputManager inputManager;
     SplineManager splineManager;
+    LockOnCam lockOnCam;
 
     public Transform targetTransform;       //Object camera follows
     public Transform cameraPivot;             //Object camera pivots on
@@ -39,6 +40,8 @@ public class CameraManager : MonoBehaviour
         cameraTransform = Camera.main.transform;
         defaultPosition = cameraTransform.localPosition.z;
 
+        lockOnCam = FindObjectOfType<LockOnCam>();
+
     }
 
     public void HandleAllCameraMovement()
@@ -48,6 +51,17 @@ public class CameraManager : MonoBehaviour
             RotateCamera();
             FollowTarget();
             HandleCameraCollisions();
+
+            if (inputManager.LockOnInput)
+            {
+                lockOnCam.enabled = true;
+            }
+
+            else
+            {
+                lockOnCam.enabled = false;
+            }
+
         }
 
         else
@@ -61,7 +75,7 @@ public class CameraManager : MonoBehaviour
     {
         Vector3 targetPosition = Vector3.SmoothDamp
             (transform.position, targetTransform.position, ref cameraFollowVelocity, cameraFollowSpeed);
-      
+
         transform.position = targetPosition;
     }
 
@@ -81,7 +95,7 @@ public class CameraManager : MonoBehaviour
 
         rotation = Vector3.zero;
         rotation.x = pivotAngle;
-        targetRotation= Quaternion.Euler(rotation);
+        targetRotation = Quaternion.Euler(rotation);
         cameraPivot.localRotation = targetRotation;
     }
 
