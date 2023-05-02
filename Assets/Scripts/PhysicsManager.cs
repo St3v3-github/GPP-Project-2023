@@ -60,7 +60,7 @@ public class PhysicsManager : MonoBehaviour
         {
             if (jumps == 1)
             {
-                animator.Play("Base Layer.Idle Jump 0", 0, 0);
+                animator.Play("Base Layer.Jump", 0, 0);
                 playerRB.AddForce(transform.up * jumpPower, ForceMode.Force);
                 jumps++;
             }
