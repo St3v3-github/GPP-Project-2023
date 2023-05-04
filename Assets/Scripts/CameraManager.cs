@@ -52,15 +52,15 @@ public class CameraManager : MonoBehaviour
             FollowTarget();
             HandleCameraCollisions();
 
-/*            if (inputManager.LockOnInput)
-            {
-                lockOnCam.enabled = true;
-            }
+            /*            if (inputManager.LockOnInput)
+                        {
+                            lockOnCam.enabled = true;
+                        }
 
-            else
-            {
-                lockOnCam.enabled = false;
-            }*/
+                        else
+                        {
+                            lockOnCam.enabled = false;
+                        }*/
 
         }
 
@@ -124,9 +124,16 @@ public class CameraManager : MonoBehaviour
 
     private void splineRules()
     {
+        Vector3 lookAtPosition = targetTransform.position + transform.up * 1.8f;
+        var targetRotation = Quaternion.LookRotation(lookAtPosition - transform.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
+    }
+}
+
+   /* private void splineRules()
+    {
         Vector3 lookAtPosition = player.transform.position + transform.up * 1.8f;
         var targetRotation = Quaternion.LookRotation(lookAtPosition - transform.position);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
-
     }
-}
+}*/

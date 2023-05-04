@@ -9,13 +9,11 @@ public class EnemyManager3 : MonoBehaviour
     [SerializeField] private float speed, timer, detectionRad = 20;
     [SerializeField] private bool isMoving, playerDetected;
 
-    // Start is called before the first frame update
     void Awake()
     {
         newPos = transform.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
         HandleMovement();
